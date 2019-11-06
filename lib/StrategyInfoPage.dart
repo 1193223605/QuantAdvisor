@@ -38,7 +38,7 @@ class _StrategyInfoPageState extends State<StrategyInfoPage> with SingleTickerPr
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: true,
           appBar: AppBar(
             title: Text('策略详情'),
             bottom: TabBar(
@@ -86,32 +86,32 @@ class TabBarView_StrategyInfo2 extends StatelessWidget
               Container(
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(8),
                 child: new StrategyBasic(),
               ),
               Container(
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(8),
                 child: new FactorList(),
               ),
               Container(
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(8),
                 child: new FactorFilterList(),
               ),
               
               Container(
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(8),
                 child: new BackTest(),
               ),
               Container(
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(8),
                 child: new FactorFilterList(),
               ),
 

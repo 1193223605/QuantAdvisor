@@ -15,9 +15,13 @@ class _BackTestState extends State<BackTest>
    @override
   Widget build(BuildContext context)
   {
-  return Flex(
-       direction: Axis.vertical,
+    //return Flex(
+      return Column(
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        //mainAxisSize: MainAxisSize.max,
+       //direction: Axis.vertical,
        children: <Widget>[
+         
          new Row(
            
            mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,22 +101,133 @@ class _BackTestState extends State<BackTest>
            ]
          ),
 
-        new Row(
-          children: <Widget>[
-              new Text('股票多头 几何年化收益=25.8%,最大回撤=16.2%'),
-          ]
-        ),
-
-        new Row(
-          children: <Widget>[
-              new Text('夏普比=0.582,平均调仓换手率=62.4%'),
-          ]
-        ),
-
-        
+        new BackTestTabControl(),
 
        ]
     );
   }
 }
 
+class BackTestTabControl extends StatefulWidget {
+  @override
+  _BackTestTabControlState createState() => _BackTestTabControlState();
+}
+
+class _BackTestTabControlState extends State<BackTestTabControl> with SingleTickerProviderStateMixin{
+
+  TabController m_tabController;
+
+  @override
+  void initState() {
+    //print('初始化 数据...');
+    m_tabController = new TabController(
+        vsync: this,//固定写法
+        length: 2   //指定tab长度
+    );
+    //添加监听
+    m_tabController.addListener((){
+      var index = m_tabController.index;
+      var previousIndex = m_tabController.previousIndex;
+      print("index: $index");
+      print('previousIndex: $previousIndex');
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Column(
+      
+      children: <Widget>[
+        
+          new TabBar(
+                  controller: m_tabController,
+                  isScrollable: true,
+                  labelStyle: TextStyle(fontSize: 12.0,),
+                  labelColor: Colors.black,
+                  tabs: <Widget>[
+                    Tab(text: '策略绩效',),
+                    Tab(text: '交易明细',),
+                  ],
+                ),
+
+            new TabBarView_BackTest(m_tabController),
+            
+
+      ]
+    );
+  }
+}
+
+
+class TabBarView_BackTest extends StatelessWidget{
+  TabController m_tabController;
+
+  TabBarView_BackTest(TabController tabControl)
+  {
+    m_tabController = tabControl;
+  }
+
+  @override
+  Widget build(BuildContext context){
+    
+    return new SizedBox(
+      
+      
+      width: 380.0,
+      height: 380.0,
+
+      child: new TabBarView(
+          
+          controller: m_tabController,
+                  
+        
+        children: <Widget>[
+              Container(
+                color: Color(0xffffffff),
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(0),
+                height: 1100,
+                child: Column
+                (
+                    children: <Widget>[
+                      new Text("股票多头,几何年化收益=25.8%,最大回撤=16.2%"),
+                    ],
+                  )
+                
+                
+                    
+              ),
+
+             Container(
+                color: Color(0xffffffff),
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(0),
+                child: new Text("夏普比=0.582,平均调仓换手率=62.4%"),
+              ),
+
+      ],)
+    );
+    /*
+    return TabBarView(
+            controller: m_tabController,
+            children: <Widget>[
+              Container(
+                color: Color(0xffffffff),
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(20),
+                child: new Text("股票多头 几何年化收益=25.8%,最大回撤=16.2%"),//new StrategyBasic(),
+              ),
+              Container(
+                color: Color(0xffffffff),
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(20),
+                child: new Text("夏普比=0.582,平均调仓换手率=62.4%"),
+              ),
+              
+              
+            ],
+          );
+          */
+  }
+}
