@@ -208,26 +208,6 @@ class TabBarView_BackTest extends StatelessWidget{
 
       ],)
     );
-    /*
-    return TabBarView(
-            controller: m_tabController,
-            children: <Widget>[
-              Container(
-                color: Color(0xffffffff),
-                alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20),
-                child: new Text("股票多头 几何年化收益=25.8%,最大回撤=16.2%"),//new StrategyBasic(),
-              ),
-              Container(
-                color: Color(0xffffffff),
-                alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20),
-                child: new Text("夏普比=0.582,平均调仓换手率=62.4%"),
-              ),
-              
-              
-            ],
-          );
-          */
+
   }
 }
