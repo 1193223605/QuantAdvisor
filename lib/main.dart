@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:uitest2/entityclass.dart';
 import 'newStrategy.dart';
 import 'StrategyInfoPage.dart';
+
+import 'webapihelper.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: '我的策略'),
+      home: MyHomePage(title: '我的模型'),
     );
   }
 }
@@ -30,19 +33,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  List<Widget> _list = new List();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
+
+      //模型列表
       body: new StrategyList(),
 
       bottomNavigationBar: BottomNavigationBar( // 底部导航
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.add_to_home_screen), 
-                title: Text('新建策略'),
+                title: Text('新建模型'),
                 ),
               BottomNavigationBarItem(icon: Icon(Icons.exit_to_app), title: Text('退出')),
             ],
@@ -62,7 +69,73 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class StrategyList extends StatelessWidget
+class StrategyList extends StatefulWidget {
+    @override
+    State createState() => new StrategyListState();
+}
+
+class StrategyListState extends State<StrategyList>
+{
+
+    List<ModelInfo> _listData = new List();
+    List<Widget> _list = new List();
+
+
+    setData() async {
+      _listData = await WebAPIHelper.instance.GetModelList();    //getData()延迟执行后赋值给data
+
+      setState((){
+            for (int i = 0; i < _listData.length; i++) {
+              var modelName = _listData[i].ModelName;
+              _list.add(new Center(
+                child: ListTile(
+                  leading: new Icon(Icons.launch),
+                  title: new Text(modelName),
+                  trailing: new Icon(Icons.keyboard_arrow_right),
+
+                  onTap: ()
+                  {
+                    //print('$modelName');
+
+                    //显示当前策略信息
+                      Navigator.push(
+                      context,
+                      //new MaterialPageRoute(builder: (context) => new TabControllerPage()),
+                      new MaterialPageRoute(builder: (context) => new StrategyInfoPage(modelName))
+                      );
+                  },
+
+
+                ),
+              ));
+            }
+          });
+      
+    }
+
+    @override
+    void initState() {
+        
+        setData();
+        
+    }
+
+
+  @override
+  Widget build(BuildContext context)
+  {
+
+          return new Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+            children: _list,
+          );
+        
+  }
+}
+
+
+
+class StrategyListold extends StatelessWidget
 {
   @override
   Widget build(BuildContext context)
@@ -81,7 +154,7 @@ class StrategyList extends StatelessWidget
                   Navigator.push(
                   context,
                   //new MaterialPageRoute(builder: (context) => new TabControllerPage()),
-                  new MaterialPageRoute(builder: (context) => new StrategyInfoPage())
+                  new MaterialPageRoute(builder: (context) => new StrategyInfoPage('aaas'))
                   );
               },
             ),

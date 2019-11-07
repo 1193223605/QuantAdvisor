@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class LearnDropdownButton extends StatefulWidget{
+
+  String m_CurrentStockRange = "";
+  LearnDropdownButton(String stockRange){
+      m_CurrentStockRange = stockRange;
+  }
+
   @override
   State<StatefulWidget> createState() {
     return _LearnDropdownButton();
@@ -12,52 +18,52 @@ class _LearnDropdownButton extends State<LearnDropdownButton>{
     List<DropdownMenuItem> items=new List();
     DropdownMenuItem dropdownMenuItem1=new DropdownMenuItem(
       child:new Text('全市场'),
-      value: '1',
+      value: '全市场',
     );
     items.add(dropdownMenuItem1);
     DropdownMenuItem dropdownMenuItem2=new DropdownMenuItem(
       child:new Text('沪深300'),
-      value: '2',
+      value: '沪深300',
     );
     items.add(dropdownMenuItem2);
     DropdownMenuItem dropdownMenuItem3=new DropdownMenuItem(
       child:new Text('中证500'),
-      value: '3',
+      value: '中证500',
     );
     items.add(dropdownMenuItem3);
     DropdownMenuItem dropdownMenuItem4=new DropdownMenuItem(
       child:new Text('中证800'),
-      value: '4',
+      value: '中证800',
     );
     items.add(dropdownMenuItem4);
     DropdownMenuItem dropdownMenuItem5=new DropdownMenuItem(
       child:new Text('0725'),
-      value: '5',
+      value: '0725',
     );
     items.add(dropdownMenuItem5);
     DropdownMenuItem dropdownMenuItem6=new DropdownMenuItem(
       child:new Text('0811'),
-      value: '6',
+      value: '0811',
     );
     items.add(dropdownMenuItem6);
     DropdownMenuItem dropdownMenuItem7=new DropdownMenuItem(
       child:new Text('pool-0610'),
-      value: '7',
+      value: 'pool-0610',
     );
     items.add(dropdownMenuItem7);
     DropdownMenuItem dropdownMenuItem8=new DropdownMenuItem(
       child:new Text('pool-0910'),
-      value: '8',
+      value: 'pool-0910',
     );
     items.add(dropdownMenuItem8);
     DropdownMenuItem dropdownMenuItem9=new DropdownMenuItem(
       child:new Text('pool-20180513'),
-      value: '9',
+      value: 'pool-20180513',
     );
     items.add(dropdownMenuItem9);
     DropdownMenuItem dropdownMenuItem10=new DropdownMenuItem(
       child:new Text('中小市值'),
-      value: '10',
+      value: '中小市值',
     );
     items.add(dropdownMenuItem10);
     return items;
@@ -71,10 +77,13 @@ class _LearnDropdownButton extends State<LearnDropdownButton>{
 
   @override
   Widget build(BuildContext context) {
+    
+    print(widget.m_CurrentStockRange);
+
     return new DropdownButton(
               items: getListData(),
               hint:new Text('选股范围                                                       '),//当没有默认值的时候可以设置的提示
-              value: value,//下拉菜单选择完之后显示给用户的值
+              value: widget.m_CurrentStockRange,//下拉菜单选择完之后显示给用户的值
               onChanged: (T){//下拉菜单item点击之后的回调
                 setState(() {
                   value=T;

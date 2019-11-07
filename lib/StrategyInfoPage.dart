@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uitest2/entityclass.dart';
+import 'package:uitest2/webapihelper.dart';
 
 import 'StrategyBasic.dart';
 import 'FactorList.dart';
@@ -8,8 +10,21 @@ import 'backTest.dart';
 
 
 class StrategyInfoPage extends StatefulWidget {
+  
+  String m_ModelName;
+  ModelInfo m_CurrentModel = new ModelInfo();
+  
+  StrategyInfoPage(pModelName){
+      m_ModelName = pModelName;
+
+      m_CurrentModel = WebAPIHelper.instance.GetModelInfoByName(pModelName);
+  }
+
   @override
   _StrategyInfoPageState createState() => _StrategyInfoPageState();
+
+  
+  
 }
 
 class _StrategyInfoPageState extends State<StrategyInfoPage> with SingleTickerProviderStateMixin
@@ -55,7 +70,7 @@ class _StrategyInfoPageState extends State<StrategyInfoPage> with SingleTickerPr
             ),
           ),
 
-        body: new TabBarView_StrategyInfo2(m_tabController),
+        body: new TabBarView_StrategyInfo2(m_tabController,widget.m_CurrentModel),
 
         bottomNavigationBar: BottomNavigationBar( // 底部导航
             items: <BottomNavigationBarItem>[
@@ -71,10 +86,13 @@ class _StrategyInfoPageState extends State<StrategyInfoPage> with SingleTickerPr
 class TabBarView_StrategyInfo2 extends StatelessWidget
 {
   TabController m_tabController;
+  //String m_ModelName;
+  ModelInfo m_ModelInfo = new ModelInfo();
 
-  TabBarView_StrategyInfo2(TabController tabControl)
+  TabBarView_StrategyInfo2(TabController tabControl,ModelInfo modelInfo)
   {
     m_tabController = tabControl;
+    m_ModelInfo = modelInfo;
   }
 
   @override
@@ -87,7 +105,7 @@ class TabBarView_StrategyInfo2 extends StatelessWidget
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.all(8),
-                child: new StrategyBasic(),
+                child: new StrategyBasic(m_ModelInfo),
               ),
               Container(
                 color: Color(0xffffffff),
