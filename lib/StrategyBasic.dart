@@ -114,6 +114,9 @@ class StrategyBasic extends StatelessWidget
                 new Expanded(
                   flex:5,
                   child: new TextField(
+
+                        keyboardType: TextInputType.number,//键盘类型，数字键盘
+
                         decoration: InputDecoration(),
                         
                         controller: TextEditingController.fromValue(TextEditingValue
@@ -138,6 +141,8 @@ class StrategyBasic extends StatelessWidget
                 new Expanded(
                   flex:5,
                   child: new TextField(
+                        
+                        keyboardType: TextInputType.number,//键盘类型，数字键盘
                         decoration: InputDecoration(),
 
                         controller: TextEditingController.fromValue(TextEditingValue
