@@ -80,13 +80,15 @@ class StrategyListState extends State<StrategyList>
     List<ModelInfo> _listData = new List();
     List<Widget> _list = new List();
 
-    
+    //初始化得到系统数据
     GetSystemDataAsync() async {
-      await WebAPIHelper.instance.GetIndustryList();    //getData()延迟执行后赋值给data
+      await WebAPIHelper.instance.GetIndustryList();    
+      await WebAPIHelper.instance.GetFactorList();  
     }
 
+    //延迟得到模型列表后赋值给_list,再刷新界面
     GetModelListAsync() async {
-      _listData = await WebAPIHelper.instance.GetModelList();    //getData()延迟执行后赋值给data
+      _listData = await WebAPIHelper.instance.GetModelList();    
 
       setState((){
             for (int i = 0; i < _listData.length; i++) {
@@ -104,7 +106,6 @@ class StrategyListState extends State<StrategyList>
                     //显示当前策略信息
                       Navigator.push(
                       context,
-                      //new MaterialPageRoute(builder: (context) => new TabControllerPage()),
                       new MaterialPageRoute(builder: (context) => new StrategyInfoPage(modelName))
                       );
                   },

@@ -19,10 +19,25 @@ class WebAPIHelper {
   }
 
   final _url_GetModelList = 'http://47.102.210.159:3939/ListModel';
+  
   final _url_GetIndustryList = 'http://47.102.210.159:3939/ListIndustry';
 
+  final _url_GetFactorList = 'http://47.102.210.159:3939/ListFactor';
+
+  final _url_GetModelInfo = 'http://47.102.210.159:3939/GetModel?model_name=';
+
+
+  //缓存的模型列表
   List<ModelInfo> m_Cache_ModelList = new List();
+  
+  //缓存的行业列表
   List<String> m_Cache_IndustryList = new List();
+
+  //缓存的系统因子列表
+  List<FactorInfo> m_Cache_FactorList = new List();
+
+  //缓存的ModelInfoEx
+  ModelInfoEx m_Cache_ModelInfoEx = new ModelInfoEx();
 
   //得到模型列表
   Future<List<ModelInfo>> GetModelList() async {
@@ -118,4 +133,115 @@ class WebAPIHelper {
 
   }
 
+  //得到因子列表
+  Future<List<FactorInfo>> GetFactorList() async {
+    
+    var httpClient = new HttpClient();
+
+    List<FactorInfo> list = new List();
+
+    String result;
+
+    try {
+      var request = await httpClient.getUrl(Uri.parse(_url_GetFactorList));
+      var response = await request.close();
+      if (response.statusCode == HttpStatus.ok) {
+        var json = await response.transform(utf8.decoder).join();
+        var data = jsonDecode(json);
+        //result = data['origin'];
+
+        for (var item in data) {
+          
+          var factor = new FactorInfo();
+          factor.FactorName = item['FactorName'];
+          factor.FactorDesc = item['FactorDesc'];
+          factor.UserID = item['UserID'];
+          list.add(item);
+        }
+
+      } else {
+        result =
+            'Error getting IP address:\nHttp status ${response.statusCode}';
+      }
+    } catch (exception) {
+      result = 'Failed getting IP address';
+    }
+
+    m_Cache_FactorList = list;
+    return list;
+
+  }
+
+
+  //得到模型信息
+  Future<ModelInfoEx> GetModelInfoExByName(String name) async {
+    var httpClient = new HttpClient();
+
+    ModelInfoEx m = new ModelInfoEx();
+
+    String result;
+
+    try {
+      var request = await httpClient.getUrl(Uri.parse(this._url_GetModelInfo+name));
+      var response = await request.close();
+      if (response.statusCode == HttpStatus.ok) {
+        var json = await response.transform(utf8.decoder).join();
+        var data = jsonDecode(json);
+        //result = data['origin'];
+
+        m.UserID = data['UserID'][0];
+        m.ModelName = data['ModelName'][0];
+        m.ModelDesc = data['ModelDesc'][0];
+        m.FactorList = new List();
+        
+        for(var f in [data['FactorList'][0]]){
+             var fc = new FactorInModel();
+             fc.FactorWeight = f["FactorWeight"];
+             fc.FactorName = f["FactorName"];
+             fc.FactorDesc = f["FactorDesc"];
+
+             m.FactorList.add(fc);
+        }
+
+        m.IndustryList = data['IndustryList'][0];
+        m.FacProcess = data['FacProcess'][0];
+        m.WgtMethod = data['WgtMethod'][0];
+
+        m.NumStock = data['NumStock'][0];
+        m.CYBWeight = data['CYBWeight'][0];
+        m.DefaultInterval = data['DefaultInterval'][0];
+        m.DefaultHedgeIndex = data['DefaultHedgeIndex'][0];
+        m.StockRange = data['StockRange'][0];
+        
+        m.CondList = new List();
+        if (data['CondList'].length>0){
+          for(var c in [data['CondList'][0]]){
+              Cond cond = new Cond();
+              cond.CondName = c['CondName'];
+              cond.CondMin = c['CondMin'];
+              cond.CondMax = c['CondMax'];
+
+              m.CondList.add(cond);
+          }
+
+        }
+        
+        if (data['SkipHead'].length>0){
+            m.SkipHead = data['SkipHead'][0];
+        }
+        
+
+        m_Cache_ModelInfoEx = m;
+
+      } else {
+        result =
+            'Error getting IP address:\nHttp status ${response.statusCode}';
+      }
+    } catch (exception) {
+      result = 'Failed getting IP address';
+    }
+
+    return m;
+  }
+  
 }

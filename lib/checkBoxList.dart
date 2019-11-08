@@ -4,9 +4,9 @@ import 'entityclass.dart';
 
 class IndustryList extends StatefulWidget {
   
-  ModelInfo m_ModelInfo = new ModelInfo();
+  ModelInfoEx m_ModelInfo = new ModelInfoEx();
 
-  IndustryList(ModelInfo modeInfo){
+  IndustryList(ModelInfoEx modeInfo){
     m_ModelInfo = modeInfo;
     print(m_ModelInfo.IndustryList);
   }
@@ -41,8 +41,9 @@ class IndustryListState extends State<IndustryList> {
       else{
         m_isChecks[i]=false;
       }
-      
     }
+
+    m_List.clear();
 
     for(int i=0;i < WebAPIHelper.instance.m_Cache_IndustryList.length;i++){
 

@@ -6,9 +6,9 @@ import 'checkBoxList.dart';
 //显示策略基本信息的部件
 class StrategyBasic extends StatelessWidget
 {
-  ModelInfo m_ModelInfo=new ModelInfo();
+  ModelInfoEx m_ModelInfo=new ModelInfoEx();
 
-  StrategyBasic(ModelInfo modeInfo){
+  StrategyBasic(ModelInfoEx modeInfo){
     m_ModelInfo = modeInfo;
     print(m_ModelInfo.ModelDesc);
   }

@@ -70,7 +70,7 @@ class _TabControllerPageState extends State<TabControllerPage> with SingleTicker
 class TabBarView_StrategyBasic extends StatelessWidget
 {
   TabController m_tabController;
-  ModelInfo m_ModelInfo = new ModelInfo();
+  ModelInfoEx m_ModelInfo = new ModelInfoEx();
 
   TabBarView_StrategyBasic(TabController tabControl)
   {

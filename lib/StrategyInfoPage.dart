@@ -12,17 +12,16 @@ import 'backTest.dart';
 class StrategyInfoPage extends StatefulWidget {
   
   String m_ModelName;
-  ModelInfo m_CurrentModel = new ModelInfo();
+  ModelInfoEx m_CurrentModel = new ModelInfoEx();
   
   StrategyInfoPage(pModelName){
       m_ModelName = pModelName;
 
-      m_CurrentModel = WebAPIHelper.instance.GetModelInfoByName(pModelName);
+      //m_CurrentModel = WebAPIHelper.instance.GetModelInfoByName(pModelName);
   }
 
   @override
   _StrategyInfoPageState createState() => _StrategyInfoPageState();
-
   
   
 }
@@ -32,8 +31,21 @@ class _StrategyInfoPageState extends State<StrategyInfoPage> with SingleTickerPr
 
   TabController m_tabController;
 
+  _GetModelInfoExAsync() async {
+
+      ModelInfoEx m = await WebAPIHelper.instance.GetModelInfoExByName(widget.m_ModelName);
+
+      setState((){
+        widget.m_CurrentModel = m;
+      });
+
+  }
+
   @override
   void initState() {
+
+    _GetModelInfoExAsync();
+
     //print('初始化 数据...');
     m_tabController = new TabController(
         vsync: this,//固定写法
@@ -87,9 +99,9 @@ class TabBarView_StrategyInfo2 extends StatelessWidget
 {
   TabController m_tabController;
   //String m_ModelName;
-  ModelInfo m_ModelInfo = new ModelInfo();
+  ModelInfoEx m_ModelInfo = new ModelInfoEx();
 
-  TabBarView_StrategyInfo2(TabController tabControl,ModelInfo modelInfo)
+  TabBarView_StrategyInfo2(TabController tabControl,ModelInfoEx modelInfo)
   {
     m_tabController = tabControl;
     m_ModelInfo = modelInfo;
