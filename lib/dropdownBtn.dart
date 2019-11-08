@@ -5,8 +5,12 @@ class LearnDropdownButton extends StatefulWidget{
   String m_CurrentStockRange = "";
   LearnDropdownButton(String stockRange){
       m_CurrentStockRange = stockRange;
+      if (m_CurrentStockRange == null){
+        m_CurrentStockRange = "";
+      }
   }
 
+  State<LearnDropdownButton> m_state=null;
   @override
   State<StatefulWidget> createState() {
     return _LearnDropdownButton();
@@ -16,11 +20,19 @@ class _LearnDropdownButton extends State<LearnDropdownButton>{
 
   List<DropdownMenuItem> getListData(){
     List<DropdownMenuItem> items=new List();
+
     DropdownMenuItem dropdownMenuItem1=new DropdownMenuItem(
+      child:new Text(''),
+      value: '',
+    );
+    items.add(dropdownMenuItem1);
+    
+    dropdownMenuItem1=new DropdownMenuItem(
       child:new Text('全市场'),
       value: '全市场',
     );
     items.add(dropdownMenuItem1);
+
     DropdownMenuItem dropdownMenuItem2=new DropdownMenuItem(
       child:new Text('沪深300'),
       value: '沪深300',
@@ -69,7 +81,7 @@ class _LearnDropdownButton extends State<LearnDropdownButton>{
     return items;
   }
 
-  var value;
+  var m_value = '';
 
 /*  _LearnDropdownButton(){
     value=getListData()[0].value;
@@ -79,14 +91,17 @@ class _LearnDropdownButton extends State<LearnDropdownButton>{
   Widget build(BuildContext context) {
     
     print(widget.m_CurrentStockRange);
+    if (m_value == ''){
+      m_value = widget.m_CurrentStockRange;  
+    }
 
     return new DropdownButton(
               items: getListData(),
-              hint:new Text('选股范围                                                       '),//当没有默认值的时候可以设置的提示
-              value: widget.m_CurrentStockRange,//下拉菜单选择完之后显示给用户的值
+              hint:new Text('选股范围'),//当没有默认值的时候可以设置的提示
+              value: m_value,//下拉菜单选择完之后显示给用户的值
               onChanged: (T){//下拉菜单item点击之后的回调
                 setState(() {
-                  value=T;
+                  m_value=T;
                 });
               },
               elevation: 24,//设置阴影的高度
