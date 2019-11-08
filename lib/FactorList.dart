@@ -95,12 +95,14 @@ class FactorList1 extends StatelessWidget
           children: <Widget>[
               new Expanded(
                   flex:2,
-                  child: new Text(WebAPIHelper.instance.GetFactorInfoByName(f.FactorName).FactorDesc),
+                  child: new Text(WebAPIHelper.instance.GetFactorInfoByName(f.FactorName).FactorDesc,
+                        textAlign: TextAlign.center),
                 ),
                 
                 new Expanded(
                   flex:1,
-                  child: new Text('越大越好'),
+                  child: new Text('越大越好',
+                        textAlign: TextAlign.center),
                 ),
 
                 new Expanded(
