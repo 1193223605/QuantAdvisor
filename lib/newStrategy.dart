@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uitest2/entityclass.dart';
 
 import 'StrategyBasic.dart';
 import 'FactorList.dart';
@@ -69,6 +70,7 @@ class _TabControllerPageState extends State<TabControllerPage> with SingleTicker
 class TabBarView_StrategyBasic extends StatelessWidget
 {
   TabController m_tabController;
+  ModelInfo m_ModelInfo = new ModelInfo();
 
   TabBarView_StrategyBasic(TabController tabControl)
   {
@@ -85,7 +87,7 @@ class TabBarView_StrategyBasic extends StatelessWidget
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.all(20),
-                child: new StrategyBasic(),
+                child: new StrategyBasic(m_ModelInfo),
               ),
               Container(
                 color: Color(0xffffffff),
