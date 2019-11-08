@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'entityclass.dart';
+import 'webapihelper.dart';
 
 class FactorFilterList extends StatelessWidget
 {
+
+  ModelInfoEx m_ModeInfo = new ModelInfoEx();
+
+  FactorFilterList(ModelInfoEx modelInfo){
+    this.m_ModeInfo = modelInfo;
+  }
+
+  
   @override
   Widget build(BuildContext context)
   {
@@ -23,16 +33,28 @@ class FactorFilterList extends StatelessWidget
 
                   new Expanded(
                     flex:1,
-                    child: new Text('操作',
-                        textAlign: TextAlign.center),
+                    child: Row(
+                      children:<Widget>[
 
+                        new Text('操作',
+                          textAlign: TextAlign.left
+                          ),
+
+                        new IconButton(
+                          onPressed: () {},
+                          icon: new Icon(Icons.add_box),
+                          tooltip: '添加',
+                        ),  
+
+                      ]
+                    )
                   ),
             ],
           ),
         //new Divider(),
 
         new Flexible(
-            child: new FactorFilterList1(),
+            child: new FactorFilterList1(this.m_ModeInfo),
         )
         
 
@@ -43,20 +65,32 @@ class FactorFilterList extends StatelessWidget
 
 class FactorFilterList1 extends StatelessWidget
 {
-  @override
-  Widget build(BuildContext context)
-  {
-      return new ListView(
-         //itemExtent: 25.0, 
-         
-         children: <Widget>[
-           
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
+
+  ModelInfoEx m_ModelInfo = new ModelInfoEx();
+
+  List<Widget> m_List = new List();
+
+  FactorFilterList1(ModelInfoEx modelInfo){
+    this.m_ModelInfo = modelInfo;
+  }
+
+  //生成 m_List 中的widget
+  void MakeWidgetList(){
+    //添加数据
+    if (this.m_ModelInfo.CondList == null){
+      this.m_ModelInfo.CondList = new List<Cond>();
+    }
+
+    for(var f in this.m_ModelInfo.CondList){
+
+      m_List.add(
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
               new Expanded(
                   flex:2,
-                  child: new Text('20日涨跌幅'),
+                  child: new Text(WebAPIHelper.instance.GetFactorInfoByName(f.CondName).FactorDesc,
+                        textAlign: TextAlign.center),
                 ),
                 
                 new Expanded(
@@ -69,7 +103,16 @@ class FactorFilterList1 extends StatelessWidget
                       ),
 
                       new Expanded(
-                        child: new TextField(),
+                        child: new TextField(
+                          decoration: InputDecoration(),
+
+                          controller: TextEditingController.fromValue(TextEditingValue
+                              (
+                                text: '${f.CondMin}',  //判断keyword是否为空
+                            ), 
+                          ),
+
+                        ),
                       ),
 
                       new Expanded(
@@ -77,7 +120,15 @@ class FactorFilterList1 extends StatelessWidget
                       ),
 
                       new Expanded(
-                        child: new TextField(),
+                        child: new TextField(
+                          decoration: InputDecoration(),
+
+                          controller: TextEditingController.fromValue(TextEditingValue
+                              (
+                                text: '${f.CondMax}',  //判断keyword是否为空
+                            ), 
+                          ),
+                        ),
                       ),
 
                     ] 
@@ -86,34 +137,30 @@ class FactorFilterList1 extends StatelessWidget
 
                 new Expanded(
                   flex:1,
-                  child: Row(
-                    children:<Widget>[
-                      
-                      new Expanded(
-                        child: new IconButton(
+                  child:  new IconButton(
                           onPressed: () {},
                           icon: new Icon(Icons.delete),
                           tooltip: '删除',
                         ),
-                      ),
-
-                      new Expanded(
-                        child: new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.add_box),
-                          tooltip: '添加',
-                        ),
-                      ),
-
-                    ] 
-                  ),
                 ),
-
           ],
         ),
-
-         ],
-         
       );
+
+    }
+
+  }
+
+  @override
+  Widget build(BuildContext context)
+  {
+    MakeWidgetList();
+
+    return new ListView(
+        //itemExtent: 25.0, 
+        
+        children: m_List,
+        
+    );
   }
 }

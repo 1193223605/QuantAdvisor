@@ -99,7 +99,7 @@ class TabBarView_StrategyBasic extends StatelessWidget
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.all(8),
-                child: new FactorFilterList(),
+                child: new FactorFilterList(m_ModelInfo),
               ),
               
             ],

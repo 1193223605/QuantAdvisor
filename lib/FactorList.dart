@@ -78,10 +78,8 @@ class FactorList1 extends StatelessWidget
     this.m_ModeInfo = modelInfo;
   }
 
-  @override
-  Widget build(BuildContext context)
-  {
-
+  //生成 m_List 中的widget
+  void MakeWidgetList(){
     //添加数据
     if (this.m_ModeInfo.FactorList == null){
       this.m_ModeInfo.FactorList = new List<FactorInModel>();
@@ -126,11 +124,18 @@ class FactorList1 extends StatelessWidget
 
     }
 
+  }  
 
-      return new ListView(
-         //itemExtent: 25.0, 
-         
-         children: m_List,
-      );
+  @override
+  Widget build(BuildContext context)
+  {
+
+    MakeWidgetList();
+
+    return new ListView(
+        //itemExtent: 25.0, 
+        
+        children: m_List,
+    );
   }
 }
