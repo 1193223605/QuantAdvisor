@@ -30,9 +30,21 @@ class FactorList extends StatelessWidget
 
                   new Expanded(
                     flex:1,
-                    child: new Text('操作',
-                        textAlign: TextAlign.center),
+                    child: Row(
+                      children:<Widget>[
 
+                        new Text('操作',
+                          textAlign: TextAlign.left
+                          ),
+
+                        new IconButton(
+                          onPressed: () {},
+                          icon: new Icon(Icons.add_box),
+                          tooltip: '添加',
+                        ),  
+
+                      ]
+                    )
                   ),
             ],
           ),
@@ -80,27 +92,11 @@ class FactorList1 extends StatelessWidget
 
                 new Expanded(
                   flex:1,
-                  child: Row(
-                    children:<Widget>[
-                      
-                      new Expanded(
-                        child: new IconButton(
+                  child:  new IconButton(
                           onPressed: () {},
                           icon: new Icon(Icons.delete),
                           tooltip: '删除',
                         ),
-                      ),
-
-                      new Expanded(
-                        child: new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.add_box),
-                          tooltip: '添加',
-                        ),
-                      ),
-
-                    ]
-                  ), 
                 ),
           ],
         ),
@@ -128,27 +124,11 @@ class FactorList1 extends StatelessWidget
 
                 new Expanded(
                   flex:1,
-                  child: Row(
-                    children:<Widget>[
-                      
-                      new Expanded(
-                        child: new IconButton(
+                  child:  new IconButton(
                           onPressed: () {},
                           icon: new Icon(Icons.delete),
                           tooltip: '删除',
                         ),
-                      ),
-
-                      new Expanded(
-                        child: new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.add_box),
-                          tooltip: '添加',
-                        ),
-                      ),
-
-                    ] 
-                  ),
                 ),
 
           ],
@@ -176,27 +156,11 @@ class FactorList1 extends StatelessWidget
 
                 new Expanded(
                   flex:1,
-                  child: Row(
-                    children:<Widget>[
-                      
-                      new Expanded(
-                        child: new IconButton(
+                  child:  new IconButton(
                           onPressed: () {},
                           icon: new Icon(Icons.delete),
                           tooltip: '删除',
                         ),
-                      ),
-
-                      new Expanded(
-                        child: new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.add_box),
-                          tooltip: '添加',
-                        ),
-                      ),
-
-                    ] 
-                  ),
                 ),
 
           ],
@@ -225,27 +189,11 @@ class FactorList1 extends StatelessWidget
 
                 new Expanded(
                   flex:1,
-                  child: Row(
-                    children:<Widget>[
-                      
-                      new Expanded(
-                        child: new IconButton(
+                  child:  new IconButton(
                           onPressed: () {},
                           icon: new Icon(Icons.delete),
                           tooltip: '删除',
                         ),
-                      ),
-
-                      new Expanded(
-                        child: new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.add_box),
-                          tooltip: '添加',
-                        ),
-                      ),
-
-                    ] 
-                  ),
                 ),
 
           ],
@@ -273,27 +221,11 @@ class FactorList1 extends StatelessWidget
 
                 new Expanded(
                   flex:1,
-                  child: Row(
-                    children:<Widget>[
-                      
-                      new Expanded(
-                        child: new IconButton(
+                  child:  new IconButton(
                           onPressed: () {},
                           icon: new Icon(Icons.delete),
                           tooltip: '删除',
                         ),
-                      ),
-
-                      new Expanded(
-                        child: new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.add_box),
-                          tooltip: '添加',
-                        ),
-                      ),
-
-                    ] 
-                  ),
                 ),
 
           ],
