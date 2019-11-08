@@ -98,7 +98,7 @@ class StrategyBasic extends StatelessWidget
                 
                 new Expanded(
                   flex:5,
-                  child: new IndustryList(),
+                  child: new IndustryList(this.m_ModelInfo),
                 ),
            ]
          ),

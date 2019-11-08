@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'webapihelper.dart';
+import 'entityclass.dart';
 
 class IndustryList extends StatefulWidget {
+  
+  ModelInfo m_ModelInfo = new ModelInfo();
+
+  IndustryList(ModelInfo modeInfo){
+    m_ModelInfo = modeInfo;
+    print(m_ModelInfo.IndustryList);
+  }
+
   @override
   State<StatefulWidget> createState() => IndustryListState();
 }
@@ -8,126 +18,77 @@ class IndustryList extends StatefulWidget {
 class IndustryListState extends State<IndustryList> {
   bool _value = false;
 
+  List<Widget> m_List = new List();
+  //列表是否选中值
+  List<bool> m_isChecks = new List();
+
+  //初始化行业列表
+  void InitialList(){
+
+    bool isCheck = false;
+
+    m_isChecks = new List(WebAPIHelper.instance.m_Cache_IndustryList.length);
+
+    for(int i=0;i<m_isChecks.length;i++){
+
+      var industryName = WebAPIHelper.instance.m_Cache_IndustryList[i];
+      if (widget.m_ModelInfo.IndustryList == null){
+        widget.m_ModelInfo.IndustryList ="";
+      }
+      if (widget.m_ModelInfo.IndustryList.indexOf(industryName)>=0){
+          m_isChecks[i]=true;
+      }
+      else{
+        m_isChecks[i]=false;
+      }
+      
+    }
+
+    for(int i=0;i < WebAPIHelper.instance.m_Cache_IndustryList.length;i++){
+
+      var name = WebAPIHelper.instance.m_Cache_IndustryList[i];
+      m_List.add(
+        new CheckboxListTile(
+          value: m_isChecks[i],
+          onChanged: (bool){
+            setState(() {
+              m_isChecks[i] = bool;
+            });
+          },
+          title: Text(name),
+          controlAffinity: ListTileControlAffinity.platform,
+          activeColor: _value ? Colors.red : Colors.green,
+          dense: true,
+        ),
+      );
+    }
+
+  }
+
   //全选/全不选切换
   void _valueChanged(bool value) {
-    for (var i = 0; i < isChecks.length; i++) {
-      isChecks[i] = value;
+    for (var i = 0; i < m_isChecks.length; i++) {
+      m_isChecks[i] = value;
     }
     setState(() {
       _value = value;
     });
   }
 
-  bool isCheck = false;
-
-  //列表是否选中值
-  List<bool> isChecks = [false, false, false, false,false, false, false, false];
-
   @override
   Widget build(BuildContext context) {
+
+    InitialList();
+
     return new SizedBox(
       height: 238,  
       child : new SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: new Column(
-      children: <Widget>[
-
-          CheckboxListTile(
-            value: isChecks[0],
-            onChanged: (bool){
-              setState(() {
-                isChecks[0] = bool;
-              });
-            },
-            title: Text('银行'),
-            controlAffinity: ListTileControlAffinity.platform,
-            activeColor: _value ? Colors.red : Colors.green,
-            dense: true,
-          ),
-          
-          CheckboxListTile(
-            value: isChecks[1],
-            onChanged: (bool){
-              setState(() {
-                isChecks[1] = bool;
-              });
-            },
-            title: Text('房地产'),
-            controlAffinity: ListTileControlAffinity.platform,
-            activeColor: _value ? Colors.red : Colors.green,
-            dense: true,
-          ),
-        
-        CheckboxListTile(
-            value: isChecks[2],
-            onChanged: (bool){
-              setState(() {
-                isChecks[2] = bool;
-              });
-            },
-            title: Text('医药生物'),
-            controlAffinity: ListTileControlAffinity.platform,
-            activeColor: _value ? Colors.red : Colors.green,
-            dense: true,
-          ),
-        
-        CheckboxListTile(
-            value: isChecks[3],
-            onChanged: (bool){
-              setState(() {
-                isChecks[3] = bool;
-              });
-            },
-            title: Text('公用事业'),
-            controlAffinity: ListTileControlAffinity.platform,
-            activeColor: _value ? Colors.red : Colors.green,
-            dense: true,
-          ),
-
-          CheckboxListTile(
-            value: isChecks[3],
-            onChanged: (bool){
-              setState(() {
-                isChecks[4] = bool;
-              });
-            },
-            title: Text('公用事业2'),
-            controlAffinity: ListTileControlAffinity.platform,
-            activeColor: _value ? Colors.red : Colors.green,
-            dense: true,
-          ),
-
-          CheckboxListTile(
-            value: isChecks[3],
-            onChanged: (bool){
-              setState(() {
-                isChecks[5] = bool;
-              });
-            },
-            title: Text('公用事业3'),
-            controlAffinity: ListTileControlAffinity.platform,
-            activeColor: _value ? Colors.red : Colors.green,
-            dense: true,
-          ),
-
-          CheckboxListTile(
-            value: isChecks[3],
-            onChanged: (bool){
-              setState(() {
-                isChecks[6] = bool;
-              });
-            },
-            title: Text('公用事业4'),
-            controlAffinity: ListTileControlAffinity.platform,
-            activeColor: _value ? Colors.red : Colors.green,
-            dense: true,
-          ),
-
-      ],
-          
+            children: m_List,
+        ),
       ),
-    ),
-  );
+    );
   }
 }
 
