@@ -21,35 +21,115 @@ class DemoPageState extends State<DemoPage> {
   bool isCheck = false;
 
   //列表是否选中值
-  List<bool> isChecks = [false, false, false, false];
+  List<bool> isChecks = [false, false, false, false,false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return new SizedBox(
+      height: 250,  
+      child : new SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: new Column(
       children: <Widget>[
-        /*
-        Center(
-          child: CheckboxListTile(
-            value: _value,
-            //默认文字是否高亮
-            selected: true,
-            onChanged: _valueChanged,
-            dense: false,
-            //文字是否对齐 图标高度
-            isThreeLine: false,
-            
-            //文字是否三行显示
-            title: Text('整个内容'),
-            // 将控件放在何处相对于文本,leading 按钮显示在文字前面,platform,trailing 按钮显示在文字后面
-            controlAffinity: ListTileControlAffinity.platform,
-            subtitle: Text('勾选下列选项'),
-            secondary: Icon(Icons.archive),//左侧小图标
-            
-            activeColor: Colors.red,
-          ),
-        ),
-        */
 
+          CheckboxListTile(
+            value: isChecks[0],
+            onChanged: (bool){
+              setState(() {
+                isChecks[0] = bool;
+              });
+            },
+            title: Text('银行'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+          
+          CheckboxListTile(
+            value: isChecks[1],
+            onChanged: (bool){
+              setState(() {
+                isChecks[1] = bool;
+              });
+            },
+            title: Text('房地产'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+        
+        CheckboxListTile(
+            value: isChecks[2],
+            onChanged: (bool){
+              setState(() {
+                isChecks[2] = bool;
+              });
+            },
+            title: Text('医药生物'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+        
+        CheckboxListTile(
+            value: isChecks[3],
+            onChanged: (bool){
+              setState(() {
+                isChecks[3] = bool;
+              });
+            },
+            title: Text('公用事业'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+
+          CheckboxListTile(
+            value: isChecks[3],
+            onChanged: (bool){
+              setState(() {
+                isChecks[4] = bool;
+              });
+            },
+            title: Text('公用事业2'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+
+          CheckboxListTile(
+            value: isChecks[3],
+            onChanged: (bool){
+              setState(() {
+                isChecks[5] = bool;
+              });
+            },
+            title: Text('公用事业3'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+
+          CheckboxListTile(
+            value: isChecks[3],
+            onChanged: (bool){
+              setState(() {
+                isChecks[6] = bool;
+              });
+            },
+            title: Text('公用事业4'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+
+      ],
+          //physics: BouncingScrollPhysics(),
+       //new Center(
+    //child: Column(
+      //children: <Widget>[
+
+/*
           CheckboxListTile(
             value: isChecks[0],
             onChanged: (bool){
@@ -102,8 +182,53 @@ class DemoPageState extends State<DemoPage> {
             activeColor: _value ? Colors.red : Colors.green,
             dense: true,
           ),
-      ],
-    );
+
+          CheckboxListTile(
+            value: isChecks[3],
+            onChanged: (bool){
+              setState(() {
+                isChecks[3] = bool;
+              });
+            },
+            title: Text('公用事业2'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+
+          CheckboxListTile(
+            value: isChecks[3],
+            onChanged: (bool){
+              setState(() {
+                isChecks[3] = bool;
+              });
+            },
+            title: Text('公用事业3'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+
+          CheckboxListTile(
+            value: isChecks[3],
+            onChanged: (bool){
+              setState(() {
+                isChecks[3] = bool;
+              });
+            },
+            title: Text('公用事业4'),
+            controlAffinity: ListTileControlAffinity.platform,
+            activeColor: _value ? Colors.red : Colors.green,
+            dense: true,
+          ),
+          */
+
+        //],
+      //)
+    //)
+      ),
+      ),
+  );
   }
 }
 

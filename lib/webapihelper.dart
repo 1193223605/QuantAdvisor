@@ -19,9 +19,10 @@ class WebAPIHelper {
   }
 
   final _url_GetModelList = 'http://47.102.210.159:3939/ListModel';
+  final _url_GetIndustryList = 'http://47.102.210.159:3939/ListIndustry';
 
   List<ModelInfo> m_Cache_ModelList = new List();
-
+  List<String> m_Cache_IndustryList = new List();
 
   //得到模型列表
   Future<List<ModelInfo>> GetModelList() async {
@@ -80,6 +81,41 @@ class WebAPIHelper {
     }
     
     return null;
+  }
+
+  //得到行业列表
+  Future<List<String>> GetIndustryList() async {
+    
+    var httpClient = new HttpClient();
+
+    List<String> list = new List();
+
+    String result;
+
+    try {
+      var request = await httpClient.getUrl(Uri.parse(_url_GetIndustryList));
+      var response = await request.close();
+      if (response.statusCode == HttpStatus.ok) {
+        var json = await response.transform(utf8.decoder).join();
+        var data = jsonDecode(json);
+        //result = data['origin'];
+
+        for (var item in data) {
+          
+            list.add(item);
+        }
+
+      } else {
+        result =
+            'Error getting IP address:\nHttp status ${response.statusCode}';
+      }
+    } catch (exception) {
+      result = 'Failed getting IP address';
+    }
+
+    m_Cache_IndustryList = list;
+    return list;
+
   }
 
 }

@@ -80,8 +80,12 @@ class StrategyListState extends State<StrategyList>
     List<ModelInfo> _listData = new List();
     List<Widget> _list = new List();
 
+    
+    GetSystemDataAsync() async {
+      await WebAPIHelper.instance.GetIndustryList();    //getData()延迟执行后赋值给data
+    }
 
-    setData() async {
+    GetModelListAsync() async {
       _listData = await WebAPIHelper.instance.GetModelList();    //getData()延迟执行后赋值给data
 
       setState((){
@@ -116,7 +120,9 @@ class StrategyListState extends State<StrategyList>
     @override
     void initState() {
         
-        setData();
+        GetSystemDataAsync();
+        
+        GetModelListAsync();
         
     }
 
