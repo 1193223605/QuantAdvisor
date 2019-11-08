@@ -151,12 +151,12 @@ class WebAPIHelper {
         //result = data['origin'];
 
         for (var item in data) {
-          
           var factor = new FactorInfo();
+          factor.UserID = item['UserID'];
           factor.FactorName = item['FactorName'];
           factor.FactorDesc = item['FactorDesc'];
-          factor.UserID = item['UserID'];
-          list.add(item);
+
+          list.add(factor);
         }
 
       } else {
@@ -244,4 +244,15 @@ class WebAPIHelper {
     return m;
   }
   
+  FactorInfo GetFactorInfoByName(String name){
+    for(var f in m_Cache_FactorList){
+      if (f.FactorName == name){
+        return f;
+      }
+    }
+    var fc = new FactorInfo();
+    fc.FactorDesc="";
+    return fc;
+  }
+
 }

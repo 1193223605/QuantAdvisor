@@ -123,7 +123,7 @@ class TabBarView_StrategyInfo2 extends StatelessWidget
                 color: Color(0xffffffff),
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.all(8),
-                child: new FactorList(),
+                child: new FactorList(m_ModelInfo),
               ),
               Container(
                 color: Color(0xffffffff),

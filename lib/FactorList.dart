@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:uitest2/entityclass.dart';
+import 'package:uitest2/webapihelper.dart';
 
 class FactorList extends StatelessWidget
 {
+  ModelInfoEx m_ModeInfo = new ModelInfoEx();
+
+  FactorList(ModelInfoEx modelInfo){
+    this.m_ModeInfo = modelInfo;
+  }
+
   @override
   Widget build(BuildContext context)
   {
@@ -51,7 +59,7 @@ class FactorList extends StatelessWidget
         //new Divider(),
 
         new Flexible(
-            child: new FactorList1(),
+            child: new FactorList1(this.m_ModeInfo),
         )
         
 
@@ -62,20 +70,32 @@ class FactorList extends StatelessWidget
 
 class FactorList1 extends StatelessWidget
 {
+  ModelInfoEx m_ModeInfo = new ModelInfoEx();
+
+  List<Widget> m_List = new List();
+
+  FactorList1(ModelInfoEx modelInfo){
+    this.m_ModeInfo = modelInfo;
+  }
+
   @override
   Widget build(BuildContext context)
   {
-      return new ListView(
-         //itemExtent: 25.0, 
-         
-         children: <Widget>[
-           
-           new Row(
+
+    //添加数据
+    if (this.m_ModeInfo.FactorList == null){
+      this.m_ModeInfo.FactorList = new List<FactorInModel>();
+    }
+
+    for(var f in this.m_ModeInfo.FactorList){
+
+      m_List.add(
+        new Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
               new Expanded(
                   flex:2,
-                  child: new Text('流通市值'),
+                  child: new Text(WebAPIHelper.instance.GetFactorInfoByName(f.FactorName).FactorDesc),
                 ),
                 
                 new Expanded(
@@ -85,7 +105,7 @@ class FactorList1 extends StatelessWidget
 
                 new Expanded(
                   flex:1,
-                  child: new Text('50',
+                  child: new Text(f.FactorWeight.toString(),
                         textAlign: TextAlign.center),
 
                 ),
@@ -100,139 +120,15 @@ class FactorList1 extends StatelessWidget
                 ),
           ],
         ),
+      );
+
+    }
 
 
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new Expanded(
-                  flex:2,
-                  child: new Text('180日涨跌幅'),
-                ),
-                
-                new Expanded(
-                  flex:1,
-                  child: new Text('越大越好'),
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child: new Text('30',
-                        textAlign: TextAlign.center),
-
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child:  new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.delete),
-                          tooltip: '删除',
-                        ),
-                ),
-
-          ],
-        ),
-
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new Expanded(
-                  flex:2,
-                  child: new Text('60日涨跌幅'),
-                ),
-                
-                new Expanded(
-                  flex:1,
-                  child: new Text('越大越好'),
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child: new Text('30',
-                        textAlign: TextAlign.center),
-
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child:  new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.delete),
-                          tooltip: '删除',
-                        ),
-                ),
-
-          ],
-        ),
-
-
-        new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new Expanded(
-                  flex:2,
-                  child: new Text('20日成交额'),
-                ),
-                
-                new Expanded(
-                  flex:1,
-                  child: new Text('越大越好'),
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child: new Text('35',
-                        textAlign: TextAlign.center),
-
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child:  new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.delete),
-                          tooltip: '删除',
-                        ),
-                ),
-
-          ],
-        ),
-
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new Expanded(
-                  flex:2,
-                  child: new Text('非流动性'),
-                ),
-                
-                new Expanded(
-                  flex:1,
-                  child: new Text('越小越好'),
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child: new Text('15',
-                        textAlign: TextAlign.center),
-
-                ),
-
-                new Expanded(
-                  flex:1,
-                  child:  new IconButton(
-                          onPressed: () {},
-                          icon: new Icon(Icons.delete),
-                          tooltip: '删除',
-                        ),
-                ),
-
-          ],
-        ),
-
-         ],
+      return new ListView(
+         //itemExtent: 25.0, 
          
+         children: m_List,
       );
   }
 }
