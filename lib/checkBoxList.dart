@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class DemoPage extends StatefulWidget {
+class IndustryList extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => DemoPageState();
+  State<StatefulWidget> createState() => IndustryListState();
 }
 
-class DemoPageState extends State<DemoPage> {
+class IndustryListState extends State<IndustryList> {
   bool _value = false;
 
   //全选/全不选切换
@@ -26,7 +26,7 @@ class DemoPageState extends State<DemoPage> {
   @override
   Widget build(BuildContext context) {
     return new SizedBox(
-      height: 250,  
+      height: 238,  
       child : new SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: new Column(
