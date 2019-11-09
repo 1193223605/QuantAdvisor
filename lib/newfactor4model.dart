@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:uitest2/sharedata.dart';
 import 'dropdownBtn_factor.dart';
 
-import 'entityclass.dart';
+import 'dropdownBtn_func.dart';
+import 'weightslider.dart';
+import 'sharedata.dart';
 
-import 'webapihelper.dart';
+//import 'entityclass.dart';
+
+//import 'webapihelper.dart';
 
 class NewFactor4Model extends StatefulWidget{
+
+  final String title = "新建因子";
+
+  //true: 新建模型; false: 修改模型
+  bool m_IsMakeNewModel = true;
+
+  NewFactor4Model(bool isMakeNewModel){
+    m_IsMakeNewModel = isMakeNewModel;
+  }
 
    @override
   _NewFactor4ModelState createState() => _NewFactor4ModelState();
@@ -16,18 +30,49 @@ class _NewFactor4ModelState extends State<NewFactor4Model>{
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
-      children: <Widget>[
-        new Row(
-           
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-           
-           children: <Widget>[
-             new Text('因子'),
-             new DropdownBtnFactor(),
-             new Text('函数'),
-           ]
-      ]
-    )
+
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+
+      //模型列表
+      body: new Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+
+                new Text('选择因子：',
+                style: TextStyle(fontSize: 16),),
+
+                new DropdownBtnFactor(),
+
+                new Text('选择函数：',
+                style: TextStyle(fontSize: 16),),
+                new DropdownBtnFunc(),
+                
+                new WeightSlider(),
+            
+          ]
+        ),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar( // 底部导航
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.save), 
+                title: Text('保存'),
+                ),
+              BottomNavigationBarItem(icon: Icon(Icons.cancel), title: Text('返回')),
+            ],
+            onTap:  (index) {
+              //保存因子
+              Navigator.pop(context,true);
+            },
+          ),
+
+    );
   }
 }

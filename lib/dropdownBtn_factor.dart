@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:uitest2/sharedata.dart';
 import 'package:uitest2/webapihelper.dart';
+
+import 'newfactor4model.dart';
+import 'webapihelper.dart';
 
 class DropdownBtnFactor extends StatefulWidget{
 
@@ -10,14 +14,26 @@ class DropdownBtnFactor extends StatefulWidget{
 }
 class _DropdownBtnFactor extends State<DropdownBtnFactor>{
 
+  //true: 新建模型; false: 修改模型
+  bool IsMakeNewModel=false;
+
+  //得到系统因子列表，放在下拉列表框中
   List<DropdownMenuItem> getListData(){
+
     List<DropdownMenuItem> items=new List();
 
     String factorDesc = '';
     String factorName = '';
+
+    DropdownMenuItem dropdownMenuItem1=new DropdownMenuItem(
+        child:new Text(factorDesc),
+        value: factorName,
+      );
+    items.add(dropdownMenuItem1);
+
     for(var factor in WebAPIHelper.instance.m_Cache_FactorList)
     {
-      factorDesc = factor.FactorDesc + factor.FactorName;
+      factorDesc = factor.FactorDesc + "("+factor.FactorName+")";
       factorName = factor.FactorName;
       DropdownMenuItem dropdownMenuItem1=new DropdownMenuItem(
         child:new Text(factorDesc),
@@ -38,10 +54,8 @@ class _DropdownBtnFactor extends State<DropdownBtnFactor>{
   @override
   Widget build(BuildContext context) {
     
-    print(widget.m_CurrentStockRange);
-    if (m_value == ''){
-      m_value = widget.m_CurrentStockRange;  
-    }
+    Widget parent = context.ancestorWidgetOfExactType(NewFactor4Model);
+    this.IsMakeNewModel = (parent as NewFactor4Model).m_IsMakeNewModel;
 
     return new DropdownButton(
               items: getListData(),
@@ -50,6 +64,13 @@ class _DropdownBtnFactor extends State<DropdownBtnFactor>{
               onChanged: (T){//下拉菜单item点击之后的回调
                 setState(() {
                   m_value=T;
+
+                  if (this.IsMakeNewModel){
+                    SharedData.instance.GetNewFactor4NewModel().FactorName = m_value;
+                    SharedData.instance.GetNewFactor4NewModel().FactorDesc = 
+                      WebAPIHelper.instance.GetFactorInfoByName(m_value).FactorDesc;
+                  }
+
                 });
               },
               elevation: 24,//设置阴影的高度
@@ -60,6 +81,7 @@ class _DropdownBtnFactor extends State<DropdownBtnFactor>{
               
 //              isDense: false,//减少按钮的高度。默认情况下，此按钮的高度与其菜单项的高度相同。如果isDense为true，则按钮的高度减少约一半。 这个当按钮嵌入添加的容器中时，非常有用
               iconSize: 50.0,//设置三角标icon的大小
+              isExpanded: true,
     );
   }
 }
