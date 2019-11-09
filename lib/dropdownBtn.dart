@@ -10,7 +10,6 @@ class LearnDropdownButton extends StatefulWidget{
       }
   }
 
-  State<LearnDropdownButton> m_state=null;
   @override
   State<StatefulWidget> createState() {
     return _LearnDropdownButton();
