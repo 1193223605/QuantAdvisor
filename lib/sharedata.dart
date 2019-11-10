@@ -19,6 +19,7 @@ class SharedData {
     return _instance;
   }
 
+  /////////////////////////////////////////////////////////////////////////
   //新建因子的权重
   List<FactorInModel> FactorList4NewModel = new List();
   //true: Save;  false: cancel
@@ -36,4 +37,34 @@ class SharedData {
   FactorInModel GetNewFactor4NewModel(){
     return FactorList4NewModel[FactorList4NewModel.length-1];
   }
+  /////////////////////////////////////////////////////////////////////////
+  
+  
+  /////////////////////////////////////////////////////////////////////////
+  //新建因子筛选条件
+  List<Cond> CondList4NewModel = new List();
+  
+  void ClearNewConditionData(){
+    CondList4NewModel.clear();
+  }
+
+  void AddNewCondition4NewModel(){
+    CondList4NewModel.add(new Cond());
+  }
+
+  Cond GetNewCondition4NewModel(){
+    return CondList4NewModel[CondList4NewModel.length-1];
+  }
+  /////////////////////////////////////////////////////////////////////////
+
+}
+
+enum FactorOrCondition{
+  Factor,
+  Condition,
+}
+
+enum FactorFilterWeight {
+   min,
+   max,
 }

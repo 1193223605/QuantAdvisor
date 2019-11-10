@@ -3,9 +3,18 @@ import 'package:uitest2/sharedata.dart';
 import 'package:uitest2/webapihelper.dart';
 
 import 'newfactor4model.dart';
+import 'newfactorfilter4model.dart';
 import 'webapihelper.dart';
 
 class DropdownBtnFactor extends StatefulWidget{
+
+//true: 新建模型; false: 修改模型
+  bool IsMakeNewModel=false;
+  FactorOrCondition m_type = FactorOrCondition.Factor;
+
+  DropdownBtnFactor(FactorOrCondition type){
+    m_type = type;
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -14,8 +23,7 @@ class DropdownBtnFactor extends StatefulWidget{
 }
 class _DropdownBtnFactor extends State<DropdownBtnFactor>{
 
-  //true: 新建模型; false: 修改模型
-  bool IsMakeNewModel=false;
+  
 
   //得到系统因子列表，放在下拉列表框中
   List<DropdownMenuItem> getListData(){
@@ -54,8 +62,15 @@ class _DropdownBtnFactor extends State<DropdownBtnFactor>{
   @override
   Widget build(BuildContext context) {
     
-    Widget parent = context.ancestorWidgetOfExactType(NewFactor4Model);
-    this.IsMakeNewModel = (parent as NewFactor4Model).m_IsMakeNewModel;
+    Widget parent = null;
+    if (widget.m_type == FactorOrCondition.Factor){
+      parent = context.ancestorWidgetOfExactType(NewFactor4Model);
+      widget.IsMakeNewModel = (parent as NewFactor4Model).m_IsMakeNewModel; 
+    }
+    else{
+      parent = context.ancestorWidgetOfExactType(NewFactorFilter4Model);
+      widget.IsMakeNewModel = (parent as NewFactorFilter4Model).m_IsMakeNewModel; 
+    }
 
     return new DropdownButton(
               items: getListData(),
@@ -65,10 +80,15 @@ class _DropdownBtnFactor extends State<DropdownBtnFactor>{
                 setState(() {
                   m_value=T;
 
-                  if (this.IsMakeNewModel){
-                    SharedData.instance.GetNewFactor4NewModel().FactorName = m_value;
-                    SharedData.instance.GetNewFactor4NewModel().FactorDesc = 
-                      WebAPIHelper.instance.GetFactorInfoByName(m_value).FactorDesc;
+                  if (widget.IsMakeNewModel){
+                    if (widget.m_type == FactorOrCondition.Factor){
+                      SharedData.instance.GetNewFactor4NewModel().FactorName = m_value;
+                      SharedData.instance.GetNewFactor4NewModel().FactorDesc = 
+                        WebAPIHelper.instance.GetFactorInfoByName(m_value).FactorDesc;  
+                    }
+                    else{
+                      SharedData.instance.GetNewCondition4NewModel().CondName = m_value;
+                    }
                   }
 
                 });
